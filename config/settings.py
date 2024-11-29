@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     #Local Apps
     'engage.common',
     'engage.locations',
+    'engage.accounts',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
+AUTH_USER_MODEL = 'accounts.User'
 
 DATABASES = {
     'default': {
