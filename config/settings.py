@@ -18,7 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #Local Apps
-    'engage.common'
+    'engage.common',
+    'engage.locations',
 ]
 
 MIDDLEWARE = [
