@@ -74,6 +74,8 @@ class AbstractAddress(TimestampModel):
     union = models.ForeignKey(Union, on_delete=models.PROTECT, verbose_name=_('union'), related_name='+', null=True, blank=True)
     living_place = models.CharField(verbose_name=_('living place'), max_length=200)
     holding_no = models.CharField(verbose_name=_('holding no'), max_length=200, null=True, blank=True)
+    ward_no = models.CharField(verbose_name=_('ward no'), max_length=200, null=True, blank=True)
+    road_no = models.CharField(verbose_name=_('road no'), max_length=200, null=True, blank=True)
     location = models.CharField(verbose_name=_('location'), max_length=200)
 
     class Located(models.TextChoices):

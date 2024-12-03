@@ -7,7 +7,7 @@ from engage.locations.models import AbstractAddress
 
 
 class User(AbstractUser):
-    avatar = models.ImageField(verbose_name=_('avatar'), upload_to='avatars/', blank=True, null=True)
+    picture = models.URLField(null=True, blank=True)
     mobile_number = PhoneNumberField(verbose_name=_('mobile number'), blank=True, null=True)
     nid_no = models.CharField(max_length=200, verbose_name=_('nid no'), blank=True, null=True)
     date_of_birth = models.CharField(max_length=200, verbose_name=_('date of birth'), blank=True, null=True)
