@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from engage.common.models import TimestampModel
+from engage.accounts.models import User
 from engage.locations.models import Division, District, Upazila, Union
 
 
@@ -30,3 +31,21 @@ class Localgovt(TimestampModel):
 
     def __str__(self):
         return self.type
+
+
+class Member(models.Model):
+    position = models.CharField(max_length=200, verbose_name=_('position'))
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_('user'), related_name='+')
+    localgovt = models.ForeignKey(Localgovt, on_delete=models.PROTECT, verbose_name=_('local govt'), related_name='+')
+    areas = models.CharField(max_length=200, verbose_name=_('working areas'))
+    start_at = models.DateField(verbose_name=_('working start date'))
+    end_at = models.DateField(verbose_name=_('working end date'))
+    is_active = models.BooleanField(verbose_name=_('active status'), default=True)
+    
+    
+    class Meta:
+        verbose_name = _('member')
+        verbose_name_plural = _('members')
+
+    def __str__(self):
+        return f"{self.position}: {self.user.first_name} {self.user.last_name}"
