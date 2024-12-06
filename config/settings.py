@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'engage.locations',
     'engage.accounts',
     'engage.local_govt',
+    'engage.request',
 ]
 
 MIDDLEWARE = [
