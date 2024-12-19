@@ -1,10 +1,10 @@
-import json
-import os 
+import json 
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from engage.locations.api.v1.serializers import DivisionCreateSerializer, DistrictCreateSerializer, UpazilaCreateSerializer, UnionCreateSerializer
+from engage.locations.models import Division
 
 
 class DivisionCreateView(APIView):
@@ -37,6 +37,19 @@ class DivisionCreateView(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+
+class DivisionListView(APIView):
+    def get(self, request):
+        divisions = Division.objects.all()
+        serializer = DivisionCreateSerializer(divisions, many=True)
+
+        data = {
+            "success": True,
+            "message": "Service list retrieved successfully.",
+            "data": serializer.data
+        }
+        return Response(data)
 
 
 class DistrictCreateView(APIView):

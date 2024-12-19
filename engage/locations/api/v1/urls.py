@@ -1,6 +1,6 @@
 from django.urls import path
 
-from engage.locations.api.v1.views import DivisionCreateView, DistrictCreateView, UpazilaCreateView, UnionCreateView
+from engage.locations.api.v1.views import DivisionCreateView, DistrictCreateView, UpazilaCreateView, UnionCreateView, DivisionListView
 
 
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path('district-create/', DistrictCreateView.as_view(), name='district_create'),
     path('upazila-create/', UpazilaCreateView.as_view(), name='upazila_create'),
     path('union-create/', UnionCreateView.as_view(), name='union_create'),
+    path('division-list/', DivisionListView.as_view(), name='division_list'),
 ]
