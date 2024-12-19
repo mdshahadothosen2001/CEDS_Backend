@@ -2,9 +2,10 @@ import json
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 
 from engage.locations.api.v1.serializers import DivisionCreateSerializer, DistrictCreateSerializer, UpazilaCreateSerializer, UnionCreateSerializer
-from engage.locations.models import Division
+from engage.locations.models import Division, District
 
 
 class DivisionCreateView(APIView):
@@ -46,7 +47,7 @@ class DivisionListView(APIView):
 
         data = {
             "success": True,
-            "message": "Service list retrieved successfully.",
+            "message": "Division list retrieved successfully.",
             "data": serializer.data
         }
         return Response(data)
@@ -83,6 +84,28 @@ class DistrictCreateView(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+
+class DistrictListView(APIView):
+    def get(self, request):
+        division_id = request.query_params.get('division_id')
+        if division_id:
+            districts = District.objects.filter(division__id=division_id)
+            serializer = DistrictCreateSerializer(districts, many=True)
+
+            data = {
+                "success": True,
+                "message": "District list retrieved successfully.",
+                "data": serializer.data
+            }
+            return Response(data)
+        
+        data = {
+                "success": False,
+                "message": "District list can't retrieved successfully.",
+                "data": []
+            }
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UpazilaCreateView(APIView):
