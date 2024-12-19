@@ -5,7 +5,36 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from engage.locations.api.v1.serializers import DivisionCreateSerializer, DistrictCreateSerializer, UpazilaCreateSerializer, UnionCreateSerializer
-from engage.locations.models import Division, District
+from engage.locations.models import Division, District, Upazila, Union
+
+class LocalGovtListView(APIView):
+    def get(self, request):
+        data = {
+            "success": True,
+            "message": "Local goverment list retrieved successfully.",
+            "data": [
+                {
+                    'id':1,
+                    'name': 'Union Parishad',
+                    'fields': {
+                        'Division': '/api/locations/v1/division-list/',
+                        'District': '/api/locations/v1/district-list/',
+                        'Upazila': '/api/locations/v1/upazila-list/',
+                        'Union': '/api/locations/v1/union-list/'
+                    }
+                },
+                {
+                    'id':2,
+                    'name': 'Upazila Parishad',
+                    'fields': {
+                        'Division': '/api/locations/v1/division-list/',
+                        'District': '/api/locations/v1/district-list/',
+                        'Upazila': '/api/locations/v1/upazila-list/'
+                    }
+                }
+            ]
+        }
+        return Response(data)
 
 
 class DivisionCreateView(APIView):
@@ -141,6 +170,28 @@ class UpazilaCreateView(APIView):
             return Response(serializer.errors)
 
 
+class UpazilaListView(APIView):
+    def get(self, request):
+        district_id = request.query_params.get('district_id')
+        if district_id:
+            upazilas = Upazila.objects.filter(district__id=district_id)
+            serializer = UpazilaCreateSerializer(upazilas, many=True)
+
+            data = {
+                "success": True,
+                "message": "Upazila list retrieved successfully.",
+                "data": serializer.data
+            }
+            return Response(data)
+        
+        data = {
+                "success": False,
+                "message": "Upazila list can't retrieved successfully.",
+                "data": []
+            }
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
+
 class UnionCreateView(APIView):
     serializer_class = UnionCreateSerializer
 
@@ -172,3 +223,25 @@ class UnionCreateView(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+
+class UnionListView(APIView):
+    def get(self, request):
+        upazila_id = request.query_params.get('upazila_id')
+        if upazila_id:
+            unions = Union.objects.filter(upazila__id=upazila_id)
+            serializer = UnionCreateSerializer(unions, many=True)
+
+            data = {
+                "success": True,
+                "message": "Union list retrieved successfully.",
+                "data": serializer.data
+            }
+            return Response(data)
+        
+        data = {
+                "success": False,
+                "message": "Union list can't retrieved successfully.",
+                "data": []
+            }
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
