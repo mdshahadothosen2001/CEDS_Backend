@@ -7,35 +7,6 @@ from rest_framework import status
 from engage.locations.api.v1.serializers import DivisionCreateSerializer, DistrictCreateSerializer, UpazilaCreateSerializer, UnionCreateSerializer
 from engage.locations.models import Division, District, Upazila, Union
 
-class LocalGovtListView(APIView):
-    def get(self, request):
-        data = {
-            "success": True,
-            "message": "Local goverment list retrieved successfully.",
-            "data": [
-                {
-                    'id':1,
-                    'name': 'Union Parishad',
-                    'fields': {
-                        'Division': '/api/locations/v1/division-list/',
-                        'District': '/api/locations/v1/district-list/',
-                        'Upazila': '/api/locations/v1/upazila-list/',
-                        'Union': '/api/locations/v1/union-list/'
-                    }
-                },
-                {
-                    'id':2,
-                    'name': 'Upazila Parishad',
-                    'fields': {
-                        'Division': '/api/locations/v1/division-list/',
-                        'District': '/api/locations/v1/district-list/',
-                        'Upazila': '/api/locations/v1/upazila-list/'
-                    }
-                }
-            ]
-        }
-        return Response(data)
-
 
 class DivisionCreateView(APIView):
     serializer_class = DivisionCreateSerializer

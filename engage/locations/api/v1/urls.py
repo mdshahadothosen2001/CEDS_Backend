@@ -9,12 +9,10 @@ from engage.locations.api.v1.views import (
     DistrictListView, 
     UpazilaListView,
     UnionListView,
-    LocalGovtListView
 )
 
 
 urlpatterns = [
-    path('localgovt-list/', LocalGovtListView.as_view(), name='localgovt_list'),
     path('division-create/', DivisionCreateView.as_view(), name='division_create'),
     path('district-create/', DistrictCreateView.as_view(), name='district_create'),
     path('upazila-create/', UpazilaCreateView.as_view(), name='upazila_create'),

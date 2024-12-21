@@ -8,17 +8,17 @@ from engage.locations.models import Division, District, Upazila, Union
 
 class Localgovt(TimestampModel):
     class TypeOfLocalGovt(models.TextChoices):
-        union_parishad = "union parishad"
-        upazila_parishad = "upazila parishad"
-        zila_parishad = "zila parishad"
-        city_corporation = "city corporation"
+        union = "union"
+        upazila = "upazila"
+        district = "district"
+        division = "division"
 
     type = models.CharField(
         max_length=20, choices=TypeOfLocalGovt.choices,verbose_name=_('Type of Local Govt')
         )
 
     division = models.ForeignKey(Division, on_delete=models.PROTECT, verbose_name=_('division'), related_name='+')
-    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name=_('district'), related_name='+')
+    district = models.ForeignKey(District, on_delete=models.PROTECT, verbose_name=_('district'), related_name='+', null=True, blank=True)
     upazila = models.ForeignKey(Upazila, on_delete=models.PROTECT, verbose_name=_('upazila'), related_name='+', null=True, blank=True)
     union = models.ForeignKey(Union, on_delete=models.PROTECT, verbose_name=_('union'), related_name='+', null=True, blank=True)
     location = models.CharField(verbose_name=_('location'), max_length=200, null=True, blank=True)
@@ -30,7 +30,15 @@ class Localgovt(TimestampModel):
         verbose_name_plural = _('localgovts')
 
     def __str__(self):
-        return self.type
+        localgovt = 'LocalGovt:' + self.division.name
+        if self.district:
+            localgovt += self.district.name
+        if self.upazila:
+            localgovt += self.upazila.name
+        if self.union:
+            localgovt += self.district.name
+
+        return localgovt
 
 
 class Member(models.Model):
