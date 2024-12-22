@@ -16,7 +16,7 @@ class Division(models.Model):
 
 
 class District(models.Model):
-    name = models.CharField(unique=True ,verbose_name=_('district'), max_length=50)
+    name = models.CharField(verbose_name=_('district'), max_length=50)
     division = models.ForeignKey(
         to=Division,
         on_delete=models.CASCADE,
@@ -33,7 +33,7 @@ class District(models.Model):
 
 
 class Upazila(models.Model):
-    name = models.CharField(unique=True ,verbose_name=_('upazila'), max_length=50)
+    name = models.CharField(verbose_name=_('upazila'), max_length=50)
     district = models.ForeignKey(
         to=District,
         on_delete=models.CASCADE,
@@ -50,7 +50,7 @@ class Upazila(models.Model):
 
 
 class Union(models.Model):
-    name = models.CharField(unique=True ,verbose_name=_('union'), max_length=50)
+    name = models.CharField(verbose_name=_('union'), max_length=50)
     upazila = models.ForeignKey(
         to=Upazila,
         on_delete=models.CASCADE,

@@ -4,7 +4,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('engage/admin/', admin.site.urls),
-    path('api/locations/', include('engage.locations.api.urls')),
+    path('locations/api/', include('engage.locations.api.urls')),
+    path('service/api/', include('engage.service.api.urls')),
 ]
 
 if settings.DEBUG:
