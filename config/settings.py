@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'debug_toolbar',
     'corsheaders',
-    'phonenumber_field',
 
     #Local Apps
     'engage.common',
