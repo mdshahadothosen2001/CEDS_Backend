@@ -1,14 +1,13 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from phonenumber_field.modelfields import PhoneNumberField
 
 from engage.locations.models import AbstractAddress
 
 
 class User(AbstractUser):
     picture = models.URLField(null=True, blank=True)
-    mobile_number = PhoneNumberField(verbose_name=_('mobile number'), blank=True, null=True)
+    mobile_number = models.CharField(max_length=11, verbose_name=_('mobile number'), blank=True, null=True)
     nid_no = models.CharField(max_length=200, verbose_name=_('nid no'), blank=True, null=True)
     date_of_birth = models.CharField(max_length=200, verbose_name=_('date of birth'), blank=True, null=True)
     birth_no = models.CharField(max_length=200, verbose_name=_('birth no'), blank=True, null=True)
